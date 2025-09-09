@@ -1,0 +1,32 @@
+name: Tests-cypress
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test-cypress:
+      timeout-minutes: 60
+      runs-on: ubuntu-latest
+      container: cypress/browsers
+
+      steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run cypress tests 
+        run: npm run cy:run
+
+      - uses: actions/upload-artifact@v4
+        if: ${{ env.ACT != 'true' && !cancelled() }}
+        with:
+          name: cypress-report
+          path: cypress/reports
+          retention-days: 30

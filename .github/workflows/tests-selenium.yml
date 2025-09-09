@@ -1,0 +1,40 @@
+name: Tests-Selenium
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test-selenium:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: actions/setup-node@v4
+      with:
+        node-version: lts/*
+        cache: 'npm'
+
+    - uses: browser-actions/setup-chrome@v1
+    
+    - uses: nanasess/setup-chromedriver@v2
+
+    - run: |
+        google-chrome --version
+        chromedriver --version
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run selenium tests 
+      run: npm run test:selenium
+
+    - uses: actions/upload-artifact@v4
+      if: ${{ env.ACT != 'true' && !cancelled() }}
+      with:
+        name: selenium-report
+        path: reports/selenium
+        retention-days: 30
