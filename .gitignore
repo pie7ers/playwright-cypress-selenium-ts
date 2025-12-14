@@ -4,3 +4,4 @@ videos
 .env
 myTest
 reports*
+.DS_Store

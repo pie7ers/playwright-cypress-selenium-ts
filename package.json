@@ -30,7 +30,7 @@
     "@typescript-eslint/eslint-plugin": "^8.43.0",
     "@typescript-eslint/parser": "^8.43.0",
     "chai": "^4.5.0",
-    "chromedriver": "^140.0.0",
+    "chromedriver": "^143.0.1",
     "commitlint": "^19.8.1",
     "cypress": "^15.1.0",
     "cypress-mochawesome-reporter": "^4.0.2",
